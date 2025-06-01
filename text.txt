@@ -1,0 +1,114 @@
+Static Variables in C
+Last Updated : 20 Mar, 2025
+In C programming, a static variable is declared using static keyword and have the property of retaining their value between multiple function calls. It is initialized only once and is not destroyed when the function returns a value. It extends the lifetime of the variable till the end of the program.
+
+Example:
+#include <stdio.h>
+// Function with static variable
+
+int fun()
+{
+    static int count = 0;
+    count++;
+    return count;
+}
+
+int main()
+{
+    printf("%d ", fun());
+    printf("%d ", fun());
+    return 0;
+}
+
+Output
+1 2
+
+Explanation: The above program prints 1 2 because static variables count is only initialized once. In the first call to fun(), count in increased to 1 which is printed. In the second call, normal local variable would have value 1 as it would have been created and initialized again, but count variable is 2 because it was not destroyed with the function. That is why it was able to retain its value between multiple function calls.
+
+Syntax
+The static variable can be simply declared by prefixing the static keyword before the normal variable declaration.
+
+	static dataType variableName;
+
+Examples of static Variables
+The following examples demonstrate the use of static variables in C programs:
+
+Return Address of Local Variable from a Function
+As static variables live till the end of the program, we can use them to return data by reference from a function in C:
+
+#include <stdio.h>
+
+int* fun()
+{
+// Create and Return static variable
+
+    static int local_var = 123;
+	return &local_var;
+}
+
+int main()
+{
+    printf("%d", *fun());
+    return 0;
+}
+
+Output
+123
+
+Explanation: In this program, fun() returns a pointer to the static local variable local_var, which retains its value even after the function exits. Unlike normal local variables, which are destroyed when function exits.
+
+Control Recursion Depth
+As these variables are only initialized once and retain their value, they can be used to control the recursion in case of infinite recursive calls.
+
+#include <stdio.h>
+// recursive function that runs from n to 0
+
+void fun(int n)
+{
+    if (n == 0)
+		return;
+    printf("%d ", n);
+    fun(n - 1);
+}
+
+int main()
+{
+    fun(-1);
+    return 0;
+}
+
+Output
+
+(infinite recursion)
+
+The above program is an example where a specific value of n (here all negative values) leads to infinite recursion. A static variable can be used to control the recursion depth in this case and avoid the stack overflow.
+
+#include <stdio.h>
+// Recursive function that runs from n to 0
+// It will terminate for recursive depth
+// greater than 10
+
+void fun(int n){
+// Static variable
+    static int depth = 0;
+    if (n == 0 || depth > 10) return;
+    printf("%d ", n);
+// Increasing with number of recursive calls
+    depth++;
+    fun(n - 1);
+}
+
+int main()
+{
+    fun(-1);
+    return 0;
+}
+
+Output
+-1 -2 -3 -4 -5 -6 -7 -8 -9 -10 -11
+Explanation: In this program, the static variable depth retains its value across recursive calls, allowing the function to track the recursion depth. It ensures the recursion terminates when depth > 10, preventing excessive recursive calls and potential stack overflow.
+
+Global Static Variables
+Static variables are generally declared inside functions, but they can also be declared outside functions (at the global scope). Global static variables have their scope limited to the file they are defined in (internal linkage). It means that they cannot be accessed outside the current translation unit (C source file).
+
+Other than that, there is no effect of static on global variables in C.
