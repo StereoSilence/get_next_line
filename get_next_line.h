@@ -6,13 +6,15 @@
 /*   By: akorzhov <akorzhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:59:38 by akorzhov          #+#    #+#             */
-/*   Updated: 2025/05/27 17:32:37 by akorzhov         ###   ########.fr       */
+/*   Updated: 2025/06/01 18:20:55 by akorzhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFFER_SIZE 42
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 # include <stdio.h>
 # include <stdlib.h>
