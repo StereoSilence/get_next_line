@@ -6,7 +6,7 @@
 /*   By: akorzhov <akorzhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:02:24 by akorzhov          #+#    #+#             */
-/*   Updated: 2025/06/01 20:28:22 by akorzhov         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:20:12 by akorzhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,68 +96,4 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	}
 	res[i] = '\0';
 	return (res);
-}
-
-char	*extract_line(char **buffer)
-{
-	char	*newline_pos;
-	char	*line;
-	char	*tmp;
-
-	newline_pos = ft_strchr(*buffer, '\n');
-	if (newline_pos)
-	{
-		line = ft_substr(*buffer, 0, newline_pos - *buffer + 1);
-		tmp = ft_strdup(newline_pos + 1);
-		free(*buffer);
-		*buffer = tmp;
-		return (line);
-	}
-	return (NULL);
-}
-
-int	read_and_append(int fd, char **buffer, char *read_buf)
-{
-	ssize_t	bytes_read;
-	char	*tmp;
-
-	bytes_read = read(fd, read_buf, BUFFER_SIZE);
-	if (bytes_read <= 0)
-		return (bytes_read);
-	read_buf[bytes_read] = '\0';
-	if (*buffer)
-	{
-		tmp = ft_strjoin(*buffer, read_buf);
-		free(*buffer);
-		*buffer = tmp;
-		if (!*buffer)
-			return (-2);
-	}
-	else
-	{
-		*buffer = ft_strdup(read_buf);
-		if (!*buffer)
-			return (-2);
-	}
-	return (1);
-}
-
-char	*handle_eof(char **buffer, char *read_buf)
-{
-	char	*line;
-
-	line = NULL;
-	if (*buffer && **buffer)
-	{
-		line = ft_strdup(*buffer);
-		free(*buffer);
-		*buffer = NULL;
-	}
-	else
-	{
-		free(*buffer);
-		*buffer = NULL;
-	}
-	free(read_buf);
-	return (line);
 }

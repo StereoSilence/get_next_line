@@ -6,7 +6,7 @@
 /*   By: akorzhov <akorzhov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:59:42 by akorzhov          #+#    #+#             */
-/*   Updated: 2025/06/01 20:54:05 by akorzhov         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:18:53 by akorzhov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static int	read_and_append(int fd, char **buffer, char *read_buf)
 	return (1);
 }
 
-/*
 static char	*handle_eof(char **buffer, char *read_buf)
 {
 	char	*line;
@@ -76,7 +75,6 @@ static char	*handle_eof(char **buffer, char *read_buf)
 	free(read_buf);
 	return (line);
 }
-*/
 
 char	*get_next_line(int fd)
 {
@@ -99,8 +97,8 @@ char	*get_next_line(int fd)
 				return (free(read_buf), line);
 		}
 		status = read_and_append(fd, &buffer, read_buf);
-		//if (status == 0)
-		//	return (handle_eof(&buffer, read_buf));
+		if (status == 0)
+			return (handle_eof(&buffer, read_buf));
 		if (status < 0)
 			return (free(buffer), free(read_buf), buffer = NULL, NULL);
 	}
